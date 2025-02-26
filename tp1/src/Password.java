@@ -72,9 +72,12 @@ public class Password {
      */
     public static boolean isStrongPassword(String password) {
 
-        // Code here
-
-        return false;
+        if (password.length() < 12) return false;
+        if (!password.matches(".*[A-Z].*")) return false;
+        if (!password.matches(".*[a-z].*")) return false;
+        if (!password.matches(".*\\d.*")) return false;
+        if (password.contains(" ")) return false;
+        return true;
     }
 
     /**
