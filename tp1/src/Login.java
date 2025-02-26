@@ -11,8 +11,25 @@ public class Login {
 
         while (true) {
 
-            // Code here
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine().trim();
+
+            if (userDatabase.containsKey(username)) {
+                System.out.print("Enter password: ");
+                String password = scanner.nextLine().trim();
+
+                if (userDatabase.get(username).equals(password)) {
+                    System.out.println("Login successful!");
+                    break;
+                } else {
+                    System.out.println("Incorrect password. Try again.");
+                }
+            } else {
+                System.out.println("Username not found. Try again.");
+            }
         }
+        scanner.close();
+
     }
 
     /**
