@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,26 +12,28 @@ import java.util.Map;
 public class Library {
     // Attributes
     private String name;
-    private List<Book> books;
+    private List<Item> items;
+    private List<Loan> activeLoans; // List to store ongoing loans
+    private List<Loan> completedLoans; // List to store completed (returned) loans
 
     // Constructor
-    public Library(String name, List<Book> books) {
+    public Library(String name, List<Item> items) {
         this.name = name;
-        this.books = books;
+        this.items = items;
     }
 
     // Method to add a book to the library
-    public void addIem(Book book) {
-        books.add(book);
+    public void addIem(Item book) {
+        items.add(book);
     }
 
     // Method to display all books in the library
-    public void displayBooks() {
-        if (books.isEmpty()) {
+    public void displayItems() {
+        if (items.isEmpty()) {
             System.out.println("The library has no books.");
         } else {
             System.out.println("Books in " + name + " library:");
-            for (Book book : books) {
+            for (Item book : items) {
                 System.out.println(book.toString());
             }
         }
@@ -79,6 +82,22 @@ public class Library {
         IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
         }
+    }
+
+    // Method to create a loan and add it to the active loans list
+    public void createLoan(Student student, Item item, Date startDate) {
+        Loan newLoan = new Loan(student, item, startDate);
+        activeLoans.add(newLoan);
+        System.out.println("Loan created: " + newLoan.toString());
+    }
+
+    // Method to mark a loan as completed (return the item and move it to completed
+    // loans)
+    public void completeLoan(Loan loan) {
+        loan.setReturnDate(new java.util.Date()); // Set the return date
+        activeLoans.remove(loan); // Remove from active loans
+        completedLoans.add(loan); // Add to completed loans
+        System.out.println("Loan completed: " + loan.toString());
     }
 
 }
